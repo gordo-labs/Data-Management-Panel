@@ -1,4 +1,4 @@
-# ets_front_end
+# Basic Data Management Panel
 
 ## Project setup
 ```
