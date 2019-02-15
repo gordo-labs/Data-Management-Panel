@@ -76,39 +76,6 @@ export default {
     },
   },
   methods: {
-    statusChange(key, status) {
-      console.log(status);
-      if (status === undefined) {
-        status = "";
-      }
-      const user = {
-        id: this.element.id,
-        [key]: status
-      };
-      const dialogData = {
-        show: true,
-        title: "User modification",
-        text:
-          "Do you want to change " +
-          this.element.first_name +
-          " " +
-          this.element.last_name +
-          " " +
-          key +
-          " as " +
-          status,
-        action: "patchUser",
-        acceptBool: true,
-        cancelBool: true,
-        acceptText: "Confirm",
-        cancelText: "Cancel",
-        payload: user
-      };
-      this.$store.commit("dialogStatus", dialogData);
-    },
-    moveUser(plus) {
-      this.$store.commit("moveArrayUser", plus);
-    },
     addNoteButton(note){
       const note_ = {
         date: new Date(),
@@ -122,7 +89,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 @import "@/assets/sass/module.scss";
 
 .asset-page {

@@ -99,8 +99,8 @@ const mutations = {
       state.sel_Element.notes = notes;
       console.log(state.sel_Element.notes);
     },
-    patchUser: (state, payload) => {
-        console.log('COMMIT: patchUser => ', payload);
+    patchElement: (state, payload) => {
+        console.log('COMMIT: patch element => ', payload);
         state.base_list.selected = payload;
         state.base_list = state.base_list.map(user => {
             if (user.id === payload.id) {
