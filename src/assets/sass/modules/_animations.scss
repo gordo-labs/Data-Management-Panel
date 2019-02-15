@@ -1,0 +1,245 @@
+.kensei_02 {
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.kensei_03 {
+    -webkit-transition: all 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+}
+
+//animations
+.animation {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition-duration: 0.2s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-property: -webkit-transform;
+    transition-property: transform;
+    transition-property: transform, -webkit-transform;
+}
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s; //  -webkit-animation-fill-mode: both;
+    //  animation-fill-mode: both;
+}
+
+.animated.infinite {
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+}
+
+.animated.hinge {
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+}
+
+.animated.flipOutX,
+.animated.flipOutY,
+.animated.bounceIn,
+.animated.bounceOut {
+    -webkit-animation-duration: .75s;
+    animation-duration: .75s;
+}
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
+
+@-webkit-keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.fadeOut {
+    -webkit-animation-name: fadeOut;
+    animation-name: fadeOut;
+}
+
+.slideInRight {
+    -webkit-animation: slideInRight 0.5s both ease-in;
+    -moz-animation: slideInRight 0.5s both ease-in;
+    animation: slideInRight 0.5s both ease-in;
+}
+
+.slideOutLeft {
+    -webkit-animation: slideOutLeft 0.5s both ease-in;
+    -moz-animation: slideOutLeft 0.5s both ease-in;
+    animation: slideOutLeft 0.5s both ease-in;
+}
+
+.scaleUpEnter {
+    -webkit-animation: scaleUp 0.5s both ease-in;
+    -moz-animation: scaleUp 0.5s both ease-in;
+    animation: scaleUp 0.5s both ease-in;
+}
+
+.slideInUp {
+    -webkit-animation: slideInUp 0.5s both ease-in;
+    -moz-animation: slideInUp 0.5s both ease-in;
+    animation: slideInUp 0.5s both ease-in;
+}
+
+.scaleUp {
+    -webkit-animation: scaleUp 0.5s both ease-in;
+    -moz-animation: scaleUp 0.5s both ease-in;
+    animation: scaleUp 0.5s both ease-in;
+}
+
+/* scale up */
+
+@keyframes scaleUp {
+    from {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+}
+
+@-moz-keyframes scaleUp {
+    from {
+        opacity: 0.3;
+        -moz-transform: scale(0.8);
+    }
+}
+
+@-webkit-keyframes scaleUp {
+    from {
+        opacity: 0.3;
+        -webkit-transform: scale(0.8);
+    }
+}
+
+/* slide in from the right */
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@-moz-keyframes slideInRight {
+    from {
+        -moz-transform: translateX(100%);
+    }
+    to {
+        -moz-transform: translateX(0);
+    }
+}
+
+@-webkit-keyframes slideInRight {
+    from {
+        -webkit-transform: translateX(100%);
+    }
+    to {
+        -webkit-transform: translateX(0);
+    }
+}
+
+/* slide in from the bottom */
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@-moz-keyframes slideInUp {
+    from {
+        -moz-transform: translateY(100%);
+    }
+    to {
+        -moz-transform: translateY(0);
+    }
+}
+
+@-webkit-keyframes slideInUp {
+    from {
+        -webkit-transform: translateY(100%);
+    }
+    to {
+        -webkit-transform: translateY(0);
+    }
+}
+
+/* slide in from the bottom */
+
+@keyframes slideOutLeft {
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@-moz-keyframes slideOutLeft {
+    to {
+        -moz-transform: translateX(-100%);
+    }
+}
+
+@-webkit-keyframes slideOutLeft {
+    to {
+        -webkit-transform: translateX(-100%);
+    }
+}
+
+/* rotate out newspaper */
+
+@-webkit-keyframes rotateOutNewspaper {
+    to {
+        -webkit-transform: translateZ(-3000px) rotateZ(360deg);
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes rotateOutNewspaper {
+    to {
+        -moz-transform: translateZ(-3000px) rotateZ(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes rotateOutNewspaper {
+    to {
+        transform: translateZ(-3000px) rotateZ(360deg);
+        opacity: 0;
+    }
+}

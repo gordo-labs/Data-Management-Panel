@@ -1,0 +1,121 @@
+@mixin linear-gradient($from, $to) {
+    background-image: linear-gradient($from, $to);
+}
+
+@mixin video-prop ($v-width: $VCwidth, $aux: 0) {
+    width: $v-width;
+    height: $v-width + $aux;
+    background-color: #d9d9d9;
+}
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin border-radius-full($radius-top, $radius-right, $radius-bottom, $radius-left) {
+    -webkit-border-radius: $radius-top $radius-right $radius-bottom $radius-left;
+    -ms-border-radius: $radius-top $radius-right $radius-bottom $radius-left;
+    border-radius: $radius-top $radius-right $radius-bottom $radius-left;
+    @include media(SM) {
+        -webkit-border-radius: $radius-top+1px $radius-right+1px $radius-bottom+1px $radius-left+1px;
+        -ms-border-radius: $radius-top+1px $radius-right+1px $radius-bottom+1px $radius-left+1px;
+        border-radius: $radius-top+1px $radius-right+1px $radius-bottom+1px $radius-left+1px;
+    }
+}
+
+@mixin flex-order($order) {
+    -webkit-order: $order;
+    -ms-flex-order: $order;
+    order: $order
+}
+
+@mixin gradient-bottom-top($color1, $alpha1, $color2, $alpha2) {
+    background: $color1;
+    background: -moz-linear-gradient(top, $color1 $alpha1, $color2 $alpha2);
+    background: -webkit-gradient(left top, left bottom, color-stop($alpha1, $color1), color-stop($alpha2, $color2));
+    background: -webkit-linear-gradient(top, $color1 $alpha1, $color2 $alpha2);
+    background: -o-linear-gradient(top, $color1 $alpha1, $color2 $alpha2);
+    background: -ms-linear-gradient(top, $color1 $alpha1, $color2 $alpha2);
+    background: linear-gradient(to bottom, $color1 $alpha1, $color2 $alpha2);
+}
+
+@mixin loading ($size, $border, $color, $opacity) {
+    spin-loading {
+        height: $size + $border * 2;
+        width: $size + $border * 2;
+        z-index: 3;
+        .loader,
+        .loader:after {
+            border-radius: 50%;
+            width: $size;
+            height: $size;
+        }
+        .loader {
+            position: relative;
+            text-indent: -9999em;
+            border-top: $border solid rgba($color, $opacity);
+            border-right: $border solid rgba($color, $opacity);
+            border-bottom: $border solid rgba($color, $opacity);
+            border-left: $border solid $color;
+            -webkit-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-animation: load8 1.1s infinite linear;
+            animation: load8 1.1s infinite linear;
+        }
+        @-webkit-keyframes load8 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes load8 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    }
+}
+
+@mixin btn-replit($type, $color: $backgrey) {
+    height: 26px;
+    @extend %center-element;
+    @include detail-font(#1f1f1f);
+    background-color: $color;
+    @if $type==0 {
+        @include border-radius-full(8px, 8px, 8px, 8px);
+    }
+    @if $type==1 {
+        @include border-radius-full(8px, 8px, 8px, 3px);
+    }
+    p {
+        margin: 0 10px;
+        span {
+            padding-left: 5px;
+        }
+    }
+}
+
+@mixin image-container($size) {
+    .image-container {
+        overflow: hidden;
+        @extend %center-element;
+        height: $size;
+        width: $size;
+        border-radius: $size/2;
+        img {
+            width: 100%;
+        }
+    }
+}
