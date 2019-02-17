@@ -9,6 +9,7 @@ const state = {
     risks:[],
     currencies: [],
     sel_Element:{
+        notes: null
     }
 };
 
@@ -87,6 +88,17 @@ const mutations = {
       console.log("Element " + payload.id + "=> ", payload);
       state.sel_Element = payload;
     },
+    setElementChartData: (state, payload) => {
+       let prices = [], dates = [], chartData;
+       state.sel_Element.prices.forEach(el => {
+            dates.push(el.date);
+            prices.push(el.value);
+        });
+        chartData = {
+            prices, dates
+        };
+      state.sel_Element.chartData = chartData;
+    },
     addNote: (state, payload) => {
       console.log("Note => ", payload);
       let notes = state.sel_Element.notes;
@@ -113,7 +125,7 @@ const mutations = {
 
 const actions = {
     getListData: (context, payload) => {
-        context.commit('setLoungesUILoading', true);
+        context.commit('setListUILoading', true);
         baseService.getList().then(data => {
             console.log('Lists => ', data);
             context.commit('setListData', data.data);
@@ -125,13 +137,14 @@ const actions = {
             context.commit('setCategoriesData');
     },
     getElementData: (context, payload) => {
-        context.commit('setLoungesUILoading', true);
+        context.commit('setListUILoading', true);
         baseService.getElement(payload.id).then(data => {
             console.log("Symbol " + "=> ", payload);
             context.commit('setElementData', data.data);
         });
         // dummy data
         context.commit('setElementData', symbol);
+        context.commit('setElementChartData');
     },
     patchElement: (context, payload) => {
         console.log('ACTION: patchUser => ', payload)
@@ -140,7 +153,7 @@ const actions = {
             context.commit('patchUser', data.data);
         });
     },
-};
+};5
 
 export default {
     state,

@@ -1,3 +1,5 @@
+
+
 const state = {
     dialog: {
         show: false,
@@ -10,21 +12,24 @@ const state = {
         cancelText: 'Cancel',
         payload: {}
     },
-  symbols_UI:{
-    notesButton: "Add Note",
-    loading: false
-  },
+      list_UI:{
+        notesButton: "Add Note",
+        loading: false
+      },
 };
 
 const getters = {
-  SYMBOLS_UI: (state) => {
-    return state.symbols_UI;
+  LIST_UI: (state) => {
+    return state.list_UI;
+  },
+  CHART: (state) => {
+    return state.chart;
   },
 };
 
 const mutations = {
-  setSymbolsUILoading: (state, payload) => {
-    state.loungesUI.loading = payload
+  setListUILoading: (state, payload) => {
+    state.list_UI.loading = payload
   },
 };
 

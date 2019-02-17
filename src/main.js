@@ -28,6 +28,8 @@ Vue.filter('uppercase', (value) => {
 //global components
 import Modal from "./components/Modal.vue"
 Vue.component('modal', Modal);
+import Chart from "./components/Chart.vue"
+Vue.component('chart', Chart);
 
 new Vue({
   router,

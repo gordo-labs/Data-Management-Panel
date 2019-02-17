@@ -73,9 +73,9 @@
             <td class="text-xs-left">{{ props.item.currency }}</td>
             <td class="text-xs-left">{{ props.item.risk_family | capitalize }}</td>
             <!-- status -->
-            <v-btn round
-                   outline
-                   v-on:click="goTo(props.item)">Detail</v-btn>
+            <!--<v-btn round-->
+                   <!--outline-->
+                   <!--v-on:click="goTo(props.item)">Detail</v-btn>-->
           </tr>
         </template>
 
@@ -125,11 +125,11 @@ export default {
           align: "left",
           value: "risk_family"
         },
-        {
-          text: "",
-          value: "",
-          sortable: false
-        }
+        // {
+        //   text: "",
+        //   value: "",
+        //   sortable: false
+        // }
       ]
     };
   },
@@ -148,7 +148,7 @@ export default {
       return this.$store.getters.FILTERED_LIST.length;
     },
     loading() {
-      return this.$store.getters.SYMBOLS_UI.loading;
+      return this.$store.getters.LIST_UI.loading;
     },
     risks() {
       return this.$store.getters.RISKS;

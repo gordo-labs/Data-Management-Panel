@@ -51,6 +51,9 @@
       </v-card-text>
     </v-card>
 
+    <v-card>
+      <chart :data="chart.chartdata" :options="chart.options"></chart>
+    </v-card>
 
   </v-content>
 </template>
@@ -64,9 +67,10 @@ export default {
   data() {
     return {
       dialogData: {},
+      note: null,
     };
   },
-  mounted() {
+  created() {
     console.log(this.$route.params.id);
     this.$store.dispatch("getElementData", this.$route.params.id);
   },
@@ -74,9 +78,27 @@ export default {
     element() {
       return this.$store.getters.SELECTED_ELEMENT;
     },
+    chart(){
+      return {
+        chartdata: {
+          labels: this.element.chartData.dates,
+          datasets: [
+            {
+              label: 'Price',
+              backgroundColor: '#c8c3c9',
+              data: this.element.chartData.prices
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      }
+    }
   },
   methods: {
-    addNoteButton(note){
+    addNoteButton(note) {
       const note_ = {
         date: new Date(),
         text: note
