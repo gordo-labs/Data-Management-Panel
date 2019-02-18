@@ -6,15 +6,9 @@ const state = {
     filtered_list: [],
     risks:[],
     currencies: [],
-    sel_Element:{
-        notes: null
-    },
-    notesByElement:[
-        {
-            id: 0,
-            notes: [{}]
-        },
-    ]
+    sel_Element:{},
+    next_Element:{},
+    notesByElement:[]
 };
 
 const getters = {
@@ -32,6 +26,9 @@ const getters = {
     },
     SELECTED_ELEMENT: (state) => {
         return state.sel_Element;
+    },
+    NEXT_ELEMENT: (state) => {
+        return state.next_Element;
     },
 };
 
@@ -81,10 +78,16 @@ const mutations = {
     },
     setElementData: (state, payload) => {
       state.sel_Element = payload;
-      state.sel_Element.notes = [];
-    },
-    setElementChartData: (state, payload) => {
+      //notes
+      state.sel_Element.notes = state.notesByElement.filter(item =>{
+          if(payload.id === item.id){
+              console.log('notes', item.notes);
+            return item.notes;
+          };
+        });
        let prices = [], dates = [], chartData;
+       
+       // chart Data
        state.sel_Element.prices.forEach(el => {
            dates.push(el.date);
            prices.push(el.value);
@@ -94,18 +97,24 @@ const mutations = {
     },
     addNote: (state, payload) => {
       console.log("Note => ", payload);
-      let notes = state.sel_Element.notes;
-      if (!!notes && notes.constructor === Array) {
-          notes.push(payload);
-      } else {
-          notes = [];
-          notes.push(payload);
-      }
-      state.sel_Element.notes = notes;
-      console.log(state.sel_Element.notes);
+      state.sel_Element.notes.push(payload);
+      state.notesByElement.map(el=>{
+          if (el.id === payload.id) {
+              el.notes.push(payload);
+          } else {
+              let note = {
+                  id: payload.id,
+                  notes: [{
+                      date: payload.date,
+                      text: payload.text
+                  }]
+              };
+              state.notesByElement.push(note);
+          }
+      })
     },
     moveArray: (state, payload) => {
-        state.element_UI.loading = true;
+        // state.element_UI.loading = true;
         console.log('COMMIT: moveInArray => ', payload);
         const id = state.sel_Element.id;
         const array = state.base_list;
@@ -124,13 +133,13 @@ const mutations = {
                 }
                 const moved = index + payload;
                 console.log('next', moved);
-                state.sel_Element = state.base_list[moved];
-                router.push({ name: 'element', params: { id: moved } });
-                // history.pushState(
-                //     {},
-                //     null,
-                //     '/element/' + state.sel_Element.id
-                // );
+                state.next_Element = state.base_list[moved];
+                // router.push({ name: 'element', params: { id: moved } });
+                history.pushState(
+                    {},
+                    null,
+                    '/element/' + state.next_Element.id
+                );
             }
         });
     },
@@ -146,21 +155,14 @@ const actions = {
             context.commit('setCategoriesData');
             context.commit('setListUILoading', false);
         });
-        // dummy data
-        // context.commit('setListData', symbols);
-        // context.commit('setFilteredListData', symbols);
-        // context.commit('setCategoriesData');
     },
     getElementData: (context, payload) => {
         context.commit('setElementLoading', true);
         baseService.getElement(payload).then(data => {
             console.log("Element " + "=> ", payload);
             context.commit('setElementData', data);
-            context.commit('setElementChartData');
             context.commit('setElementLoading', false);
         });
-        // dummy data
-        // context.commit('setElementData', symbol);
     },
 };
 

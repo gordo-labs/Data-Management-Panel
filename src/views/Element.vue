@@ -1,16 +1,7 @@
 <template>
   <v-content class="asset-page" >
-    <!--<div d-flex>-->
-    <!--<v-progress-circular-->
-            <!--class="mt-4"-->
-            <!--v-if="!loading"-->
-            <!--indeterminate-->
-            <!--color="primary"-->
-    <!--&gt;</v-progress-circular>-->
-    <!--</div>-->
-    <!--<div v-if="loading">-->
 
-    <v-card class="user-header align-start pa-3" ref="user_header"
+    <v-card v-if="element.currency" class="user-header align-start pa-3" ref="user_header"
             v-bind:style="{ borderBottom: '4px solid ' +  element.currency.color}">
 
       <!--title-->
@@ -56,7 +47,10 @@
         <h2>Notes</h2>
       </v-card-title>
       <v-card-text class="notes-list">
-        <p v-for="note in element.notes"><span>{{note.date | moment('D MMM YY | HH:mm')}}</span> {{note.text}}</p>
+        <p v-for="note in element.notes">
+          <span>{{note.date | moment('D MMM YY | HH:mm')}}</span>
+          {{note.text}}
+        </p>
       </v-card-text>
       <v-card-text>
         <textarea class="userNotes" v-model="note" placeholder="Write your note"></textarea>
@@ -67,22 +61,20 @@
     </v-card>
 
     <v-card>
-      <chart :data="chart.chartdata" :options="chart.options"></chart>
+      <chart v-if="element.chartData" :data="chart.chartdata" :options="chart.options"></chart>
     </v-card>
 
-    <!--</div>-->
   </v-content>
 </template>
 
 <script>
-import baseService from "../services/base-service.js";
-import uiService from "../services/ui-service.js";
 
 export default {
   data() {
     return {
       dialogData: {},
-      note: null,
+      notes: [],
+      note: null
     };
   },
   created() {
@@ -92,6 +84,9 @@ export default {
   computed: {
     element() {
       return this.$store.getters.SELECTED_ELEMENT;
+    },
+    loading() {
+      return this.$store.getters.ELEMENT_UI;
     },
     chart(){
       return {
@@ -115,7 +110,7 @@ export default {
   methods: {
     addNoteButton(note) {
       const note_ = {
-        // elementId: this.element.id,
+        id: this.element.id,
         date: new Date(),
         text: note
       };
@@ -124,6 +119,7 @@ export default {
     },
     moveElement(x){
       this.$store.commit("moveArray", x);
+      this.$store.dispatch("getElementData", this.$store.getters.NEXT_ELEMENT.id);
     }
   }
 };
