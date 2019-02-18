@@ -27,6 +27,9 @@ const getters = {
     SELECTED_ELEMENT: (state) => {
         return state.sel_Element;
     },
+    NOTES: (state) => {
+        return state.sel_Element.notes;
+    },
     NEXT_ELEMENT: (state) => {
         return state.next_Element;
     },
@@ -82,7 +85,7 @@ const mutations = {
       state.sel_Element.notes = state.notesByElement.filter(item =>{
           if(payload.id === item.id){
               console.log('notes', item.notes);
-            return item.notes;
+            return item;
           };
         });
        let prices = [], dates = [], chartData;
@@ -98,20 +101,7 @@ const mutations = {
     addNote: (state, payload) => {
       console.log("Note => ", payload);
       state.sel_Element.notes.push(payload);
-      state.notesByElement.map(el=>{
-          if (el.id === payload.id) {
-              el.notes.push(payload);
-          } else {
-              let note = {
-                  id: payload.id,
-                  notes: [{
-                      date: payload.date,
-                      text: payload.text
-                  }]
-              };
-              state.notesByElement.push(note);
-          }
-      })
+      state.notesByElement.push(payload);
     },
     moveArray: (state, payload) => {
         // state.element_UI.loading = true;

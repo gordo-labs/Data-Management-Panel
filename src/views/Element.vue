@@ -47,9 +47,9 @@
         <h2>Notes</h2>
       </v-card-title>
       <v-card-text class="notes-list">
-        <p v-for="note in element.notes">
-          <span>{{note.date | moment('D MMM YY | HH:mm')}}</span>
-          {{note.text}}
+        <p v-for="item in notes">
+          <span>{{item.date | moment('D MMM YY | HH:mm')}}</span>
+          {{item.text}}
         </p>
       </v-card-text>
       <v-card-text>
@@ -73,7 +73,6 @@ export default {
   data() {
     return {
       dialogData: {},
-      notes: [],
       note: null
     };
   },
@@ -84,6 +83,9 @@ export default {
   computed: {
     element() {
       return this.$store.getters.SELECTED_ELEMENT;
+    },
+    notes() {
+      return this.$store.getters.NOTES;
     },
     loading() {
       return this.$store.getters.ELEMENT_UI;
