@@ -16,11 +16,17 @@ const state = {
         notesButton: "Add Note",
         loading: false
       },
+    element_UI:{
+        loading:false
+    }
 };
 
 const getters = {
   LIST_UI: (state) => {
     return state.list_UI;
+  },
+    ELEMENT_UI: (state) => {
+    return state.element_UI;
   },
   CHART: (state) => {
     return state.chart;
@@ -28,9 +34,12 @@ const getters = {
 };
 
 const mutations = {
-  setListUILoading: (state, payload) => {
-    state.list_UI.loading = payload
-  },
+    setListUILoading: (state, payload) => {
+        state.list_UI.loading = payload
+    },
+    setElementLoading: (state, payload) => {
+        state.element_UI.loading = payload;
+    },
 };
 
 const actions = {

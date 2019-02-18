@@ -1,5 +1,14 @@
 <template>
-  <v-content class="asset-page">
+  <v-content class="asset-page" >
+    <!--<div d-flex>-->
+    <!--<v-progress-circular-->
+            <!--class="mt-4"-->
+            <!--v-if="!loading"-->
+            <!--indeterminate-->
+            <!--color="primary"-->
+    <!--&gt;</v-progress-circular>-->
+    <!--</div>-->
+    <!--<div v-if="loading">-->
 
     <v-card class="user-header align-start pa-3" ref="user_header"
             v-bind:style="{ borderBottom: '4px solid ' +  element.currency.color}">
@@ -12,10 +21,14 @@
       <!--forward & backward routing-->
       <v-card-actions class="ma-3 hidden-md-and-down">
         <p class="grey--text mr-3">id: {{element.id}}</p>
-        <v-btn outline fab small @click="moveUser(-1)" @keydown.37="moveUser(-1)">
+        <v-btn outline fab small
+               @click="moveElement(-1)"
+               @keydown.37="moveElement(-1)">
           <v-icon>keyboard_arrow_left</v-icon>
         </v-btn>
-        <v-btn outline fab small @click="moveUser(1)" @keydown.39="moveUser(1)">
+        <v-btn outline fab small
+               @click="moveElement(1)"
+               @keydown.39="moveElement(1)">
           <v-icon>keyboard_arrow_right</v-icon>
         </v-btn>
       </v-card-actions>
@@ -23,17 +36,19 @@
     </v-card>
 
     <v-card class="pa-3">
+
       <v-card-title>
         <h2>Details:</h2>
       </v-card-title>
       <v-card-text class="details_cont">
-        <div><p offset>Currency: </p><span>{{element.currency.name}} - {{element.currency.symbol}}</span></div>
-        <div> <p offset>Issuer: </p><span>{{element.issuer.name}}</span></div>
-        <div>  <p offset>ISIN: </p><span>{{element.isin}}</span></div>
-        <div>   <p offset>Region: </p><span>{{element.region.name}}</span></div>
-        <div>   <p offset>Risk Family: </p><span>{{element.risk_family.name}}</span></div>
-        <div>   <p offset>Sector: </p><span>{{element.sector.name}}</span></div>
+        <div v-if="element.currency"><p offset>Currency: </p><span>{{element.currency.name}} - {{element.currency.symbol}}</span></div>
+        <div v-if="element.issuer"> <p offset>Issuer: </p><span>{{element.issuer.name}}</span></div>
+        <div v-if="element.isin">  <p offset>ISIN: </p><span>{{element.isin}}</span></div>
+        <div v-if="element.region">   <p offset>Region: </p><span>{{element.region.name}}</span></div>
+        <div v-if="element.risk_family">   <p offset>Risk Family: </p><span>{{element.risk_family.name}}</span></div>
+        <div v-if="element.sector">   <p offset>Sector: </p><span>{{element.sector.name}}</span></div>
       </v-card-text>
+
     </v-card>
 
     <v-card class="pa-3">
@@ -55,13 +70,13 @@
       <chart :data="chart.chartdata" :options="chart.options"></chart>
     </v-card>
 
+    <!--</div>-->
   </v-content>
 </template>
 
 <script>
 import baseService from "../services/base-service.js";
 import uiService from "../services/ui-service.js";
-import symbol from "../testData/symbol"
 
 export default {
   data() {
@@ -100,11 +115,15 @@ export default {
   methods: {
     addNoteButton(note) {
       const note_ = {
+        // elementId: this.element.id,
         date: new Date(),
         text: note
       };
       console.log(note_);
       this.$store.commit("addNote", note_);
+    },
+    moveElement(x){
+      this.$store.commit("moveArray", x);
     }
   }
 };

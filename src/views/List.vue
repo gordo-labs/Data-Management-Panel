@@ -12,21 +12,28 @@
       </v-card-title>
       <v-card>
         <v-card-actions class="pa-4">
-          <v-flex xs12 sm6 d-flex>
+          <v-flex xs10 sm5 d-flex>
             <v-select
                     :items="risks"
+                    item-text="name"
+                    item-value="name"
                     label="Risks"
+                    :clearable="true"
                     v-model="riskSelected"
-                    v-on:change="changeFilter()"
             ></v-select>
           </v-flex>
-          <v-flex xs12 sm6 d-flex class="ml-3">
+          <v-flex xs10 sm5 d-flex class="ml-3">
             <v-select
                     :items="currencies"
+                    :clearable="true"
+                    item-text="name"
+                    item-value="name"
                     label="Currencies"
                     v-model="currencySelected"
-                    v-on:change="changeFilter()"
             ></v-select>
+          </v-flex>
+          <v-flex xs2 sm2 d-flex class="ml-3">
+              <v-btn flat small v-on:click="changeFilter()">Apply filter</v-btn>
           </v-flex>
         </v-card-actions>
 
@@ -60,22 +67,11 @@
         <template v-if="show" slot="items"
                   slot-scope="props">
           <tr :active="props.selected" v-on:click="goTo(props.item)">
-<!--            <td>
-              <v-checkbox :input-value="props.selected"
-                          @click="props.selected = !props.selected"
-
-                          primary
-                          hide-details></v-checkbox>
-            </td>-->
             <td class="text-xs">
               <span>{{ props.item.name}}</span>
             </td>
             <td class="text-xs-left">{{ props.item.currency }}</td>
             <td class="text-xs-left">{{ props.item.risk_family | capitalize }}</td>
-            <!-- status -->
-            <!--<v-btn round-->
-                   <!--outline-->
-                   <!--v-on:click="goTo(props.item)">Detail</v-btn>-->
           </tr>
         </template>
 
@@ -125,11 +121,6 @@ export default {
           align: "left",
           value: "risk_family"
         },
-        // {
-        //   text: "",
-        //   value: "",
-        //   sortable: false
-        // }
       ]
     };
   },
@@ -138,8 +129,10 @@ export default {
     this.$nextTick(function() {
       this.show = true;
     });
-    this.$store.dispatch("getListData");
-  },
+    if (this.list.length === 0) {
+      this.$store.dispatch("getListData");
+    }
+    },
   computed: {
     list() {
       return this.$store.getters.FILTERED_LIST;
@@ -185,7 +178,7 @@ export default {
         risk: this.riskSelected,
         currency: this.currencySelected
       };
-            console.log(categories);
+      console.log(categories);
       this.$store.commit('filterListCat', categories);
     }
   }

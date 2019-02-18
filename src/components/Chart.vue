@@ -1,6 +1,3 @@
-<!--<template>-->
-<!--</template>-->
-
 <script>
     import { Line, mixins } from 'vue-chartjs';
 
@@ -15,7 +12,3 @@
         }
     }
 </script>
-
-<!--<style scoped>-->
-
-<!--</style>-->

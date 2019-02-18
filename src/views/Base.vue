@@ -53,7 +53,8 @@ export default {
       },
     ]
   }),
-  created() {
+  mounted: function() {
+    this.$store.dispatch("getListData");
   },
   props: {
     source: String
