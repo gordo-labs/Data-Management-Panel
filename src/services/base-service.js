@@ -16,7 +16,7 @@ export default {
   getList() {
       return new Promise((resolve , reject) =>{
           fetch('http://jsonstub.com/etsfintech/symbols',config)
-              .then(function(response) {
+              .then((response)=> {
                   resolve(response.json());
               })
       });
@@ -24,7 +24,7 @@ export default {
   getElement(id) {
       return new Promise((resolve , reject) =>{
           fetch('http://jsonstub.com/etsfintech/symbols/' + id,config)
-              .then(function(response) {
+              .then((response)=> {
                   resolve(response.json());
               })
       });

@@ -6,7 +6,8 @@ const state = {
     filtered_list: [],
     risks:[],
     currencies: [],
-    sel_Element:{},
+    sel_Element:{
+    },
     next_Element:{},
     notesByElement:[]
 };
@@ -79,7 +80,7 @@ const mutations = {
     setFilteredListData: (state, payload) => {
       state.filtered_list = payload;
     },
-    setElementData: (state, payload) => {
+    setElementData: (state, payload, context) => {
       state.sel_Element = payload;
       //notes
       state.sel_Element.notes = state.notesByElement.filter(item =>{
@@ -88,9 +89,9 @@ const mutations = {
             return item;
           };
         });
-       let prices = [], dates = [], chartData;
        
        // chart Data
+       let prices = [], dates = [], chartData;
        state.sel_Element.prices.forEach(el => {
            dates.push(el.date);
            prices.push(el.value);
@@ -124,12 +125,13 @@ const mutations = {
                 const moved = index + payload;
                 console.log('next', moved);
                 state.next_Element = state.base_list[moved];
-                // router.push({ name: 'element', params: { id: moved } });
                 history.pushState(
                     {},
                     null,
                     '/element/' + state.next_Element.id
                 );
+                router.push({ name: 'element', params: { id: state.next_Element.id } });
+                // window.history.pushState({url: "/element/" + state.next_Element.id}, "", "");
             }
         });
     },
@@ -147,11 +149,12 @@ const actions = {
         });
     },
     getElementData: (context, payload) => {
-        context.commit('setElementLoading', true);
+        context.commit('setElementLoading', false);
         baseService.getElement(payload).then(data => {
             console.log("Element " + "=> ", payload);
             context.commit('setElementData', data);
-            context.commit('setElementLoading', false);
+            context.commit('setElementLoading', true);
+            context.commit('setElementNoteLoading', true);
         });
     },
 };

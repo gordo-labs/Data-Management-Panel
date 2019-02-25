@@ -1,6 +1,7 @@
 <template>
   <v-content class="asset-page" >
-
+    <v-progress-linear indeterminate v-if="!element_UI.is_loaded"></v-progress-linear>
+<div v-if="element_UI.is_loaded">
     <v-card v-if="element.currency" class="user-header align-start pa-3" ref="user_header"
             v-bind:style="{ borderBottom: '4px solid ' +  element.currency.color}">
 
@@ -42,7 +43,7 @@
 
     </v-card>
 
-    <v-card class="pa-3">
+    <v-card class="pa-3" v-if="element_UI.notes_loaded">
       <v-card-title>
         <h2>Notes</h2>
       </v-card-title>
@@ -61,9 +62,9 @@
     </v-card>
 
     <v-card>
-      <chart v-if="element.chartData" :data="chart.chartdata" :options="chart.options"></chart>
+      <chart :data="chart.chartdata" :options="chart.options"></chart>
     </v-card>
-
+</div>
   </v-content>
 </template>
 
@@ -73,7 +74,7 @@ export default {
   data() {
     return {
       dialogData: {},
-      note: null
+      note: null,
     };
   },
   created() {
@@ -84,11 +85,11 @@ export default {
     element() {
       return this.$store.getters.SELECTED_ELEMENT;
     },
+    element_UI() {
+      return this.$store.getters.ELEMENT_UI;
+    },
     notes() {
       return this.$store.getters.NOTES;
-    },
-    loading() {
-      return this.$store.getters.ELEMENT_UI;
     },
     chart(){
       return {
@@ -111,15 +112,18 @@ export default {
   },
   methods: {
     addNoteButton(note) {
+      this.$store.commit("setElementNoteLoading", false);
+      console.log(this.$store.getters.NOTES);
       const note_ = {
         id: this.element.id,
         date: new Date(),
         text: note
       };
-      console.log(note_);
       this.$store.commit("addNote", note_);
+      this.$store.commit("setElementNoteLoading", true);
     },
     moveElement(x){
+      this.$store.commit("setElementChart", false);
       this.$store.commit("moveArray", x);
       this.$store.dispatch("getElementData", this.$store.getters.NEXT_ELEMENT.id);
     }

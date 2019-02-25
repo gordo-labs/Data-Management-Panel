@@ -38,7 +38,7 @@ export const store = new Vuex.Store({
     },
   },
   modules: {
-    data,
-    ui_actions
+    ui_actions,
+    data
   }
 });

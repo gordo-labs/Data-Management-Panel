@@ -17,7 +17,9 @@ const state = {
         loading: false
       },
     element_UI:{
-        loading:false
+        is_loaded:null,
+        notes_loaded: null,
+        chart_loaded: null
     }
 };
 
@@ -38,7 +40,13 @@ const mutations = {
         state.list_UI.loading = payload
     },
     setElementLoading: (state, payload) => {
-        state.element_UI.loading = payload;
+        state.element_UI.is_loaded = payload;
+    },
+    setElementNoteLoading: (state, payload) => {
+        state.element_UI.notes_loaded = payload;
+    },
+    setElementChartLoading: (state, payload) => {
+        state.element_UI.chart_loaded = payload;
     },
 };
 

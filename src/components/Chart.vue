@@ -3,12 +3,12 @@
 
     export default {
         extends: Line,
-        // mixins: [mixins.reactiveProp],
-        props: ['data', 'options'],
+        mixins: [mixins.reactiveProp],
+        props: ['data', 'options', 'chartData'],
         mounted () {
             console.log(this.data);
             console.log(this.options);
-            this.renderChart(this.data, this.options)
+            this.renderChart(this.data, this.options);
         }
     }
 </script>

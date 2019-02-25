@@ -1,4 +1,4 @@
-# Basic Data Management Panel
+# Basic Vue + Vuex + Vuetify Data Management Panel
 
 ## Project setup
 ```
